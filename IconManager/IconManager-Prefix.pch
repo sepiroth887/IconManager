@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'IconManager' target in the 'IconManager' project
+//
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+#endif
