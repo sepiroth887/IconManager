@@ -14,6 +14,7 @@
 		F723CDA915591E1400BDF8B5 /* IconManager.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F723CD8F15591E1300BDF8B5 /* IconManager.dylib */; };
 		F723CDAF15591E1400BDF8B5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F723CDAD15591E1400BDF8B5 /* InfoPlist.strings */; };
 		F723CDB215591E1400BDF8B5 /* IconManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F723CDB115591E1400BDF8B5 /* IconManagerTests.m */; };
+		F765973D155A591D00636704 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F723CD9515591E1300BDF8B5 /* AppKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,14 +33,14 @@
 		F723CD9515591E1300BDF8B5 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		F723CD9615591E1300BDF8B5 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		F723CD9715591E1300BDF8B5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		F723CD9A15591E1300BDF8B5 /* IconManager-Prefix.pch */ = {isa = PBXFileReference; path = "IconManager-Prefix.pch"; sourceTree = "<group>"; };
-		F723CD9B15591E1300BDF8B5 /* IconManager.h */ = {isa = PBXFileReference; path = IconManager.h; sourceTree = "<group>"; };
+		F723CD9A15591E1300BDF8B5 /* IconManager-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IconManager-Prefix.pch"; sourceTree = "<group>"; };
+		F723CD9B15591E1300BDF8B5 /* IconManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IconManager.h; sourceTree = "<group>"; };
 		F723CD9C15591E1300BDF8B5 /* IconManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IconManager.m; sourceTree = "<group>"; };
 		F723CDA315591E1300BDF8B5 /* IconManagerTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IconManagerTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F723CDA415591E1300BDF8B5 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
-		F723CDAC15591E1400BDF8B5 /* IconManagerTests-Info.plist */ = {isa = PBXFileReference; path = "IconManagerTests-Info.plist"; sourceTree = "<group>"; };
+		F723CDAC15591E1400BDF8B5 /* IconManagerTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "IconManagerTests-Info.plist"; sourceTree = "<group>"; };
 		F723CDAE15591E1400BDF8B5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		F723CDB015591E1400BDF8B5 /* IconManagerTests.h */ = {isa = PBXFileReference; path = IconManagerTests.h; sourceTree = "<group>"; };
+		F723CDB015591E1400BDF8B5 /* IconManagerTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IconManagerTests.h; sourceTree = "<group>"; };
 		F723CDB115591E1400BDF8B5 /* IconManagerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IconManagerTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -48,6 +49,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F765973D155A591D00636704 /* AppKit.framework in Frameworks */,
 				F723CD9315591E1300BDF8B5 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -392,6 +394,7 @@
 				F723CDB715591E1400BDF8B5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		F723CDB815591E1400BDF8B5 /* Build configuration list for PBXNativeTarget "IconManagerTests" */ = {
 			isa = XCConfigurationList;
@@ -400,6 +403,7 @@
 				F723CDBA15591E1400BDF8B5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
