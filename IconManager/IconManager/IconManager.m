@@ -90,7 +90,7 @@
     if (ref != NULL) {
         // Take advantage of NSBitmapImageRep's -initWithCGImage: initializer, new in Leopard,
         // which is a lot more efficient than copying pixel data into a brand new NSImage.
-        // Thanks to Troy Stephens @ Apple for pointing this new method out to me.
+        // Thanks to Troy Stephens @ Apple for pointing this new method out.
         NSBitmapImageRep *bitmapImageRep = [[NSBitmapImageRep alloc] initWithCGImage:ref];
         NSImage *newImage = nil;
         if (bitmapImageRep) {
@@ -150,32 +150,18 @@ int refreshState(const char* filepath, const char* iconPath){
         
     int bufferLength = getxattr(filepath,attrName,NULL,0,0,0);
     
-    NSString *log = [NSString stringWithFormat:@"Stats: %s, %s, %i",attrName,iconPath,bufferLength];
-    
-    if([[NSFileManager defaultManager] fileExistsAtPath:@"/Users/tobiashaag/log.txt"]){
-        [[NSFileManager defaultManager] removeItemAtPath:@"/Users/tobiashaag/log.txt" error:nil];
-    }
-    
-    [log writeToFile:@"/Users/tobiashaag/log.txt" atomically:NO];
-    
     if(bufferLength <= 0) return 1;
     
     char *buffer = malloc(bufferLength);
     
     getxattr(filepath, attrName, buffer, bufferLength, 0, 0);
     
-    log = @"buffer filled";
-    
-    [log writeToFile:@"/Users/tobiashaag/buffer.txt" atomically:NO];
-    
     NSString *retString = [[NSString alloc] initWithBytes:buffer length:bufferLength encoding:NSUTF8StringEncoding];
     
     free(buffer);
     
     if(retString == nil) return 2;
-    
-    NSLog(@"Returned: %@",retString);
-    
+        
     NSString *icon;
     
     if([retString isEqualToString:@"SYNCING"]){
