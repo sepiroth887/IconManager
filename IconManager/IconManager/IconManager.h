@@ -14,7 +14,7 @@
 + (int)setBadgeForFile:(NSString*) file AndIconPath:(NSString*)iconPath;
 + (int)setIconForFile:(NSString*) file AndIconPath:(NSString*)iconPath;
 + (int)removeIconFromFile:(NSString*)file;
-
++ (NSString*) getIconFromXattrAtPath:(const char*)filepath AndIconPath:(const char*)iconPath;
 @end
 
 int setBadge(const char* filepath, const char* iconPath);

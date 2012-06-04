@@ -115,6 +115,42 @@
     return nil;
 }
 
++(NSString*) getIconFromXattrAtPath:(const char*)filepath AndIconPath:(const char*)iconPath{
+    const char *attrName = [@"com.yammer.filestate" UTF8String];
+    
+    int bufferLength = getxattr(filepath,attrName,NULL,0,0,0);
+    
+    if(bufferLength != 1) return nil;
+    
+    Byte *buffer = malloc(bufferLength);
+    
+    getxattr(filepath, attrName, buffer, bufferLength, 0, 0);
+    
+    Byte b = buffer[0];
+    
+    free(buffer);
+    
+    if(b == 0) return nil;
+    
+    NSString *icon;
+    
+    if(b == 1){
+        icon = [[NSString stringWithUTF8String: iconPath] stringByAppendingString:@"/syncing.png"];
+        NSLog(@"Icon set to syncing:");
+    }else if(b == 2){
+        icon = [[NSString stringWithUTF8String: iconPath] stringByAppendingString:@"/notSynced.png"];
+        NSLog(@"Icon set to not synced:");
+    }else if(b == 3){
+        icon = [[NSString stringWithUTF8String: iconPath] stringByAppendingString:@"/synced.png"];
+        NSLog(@"Icon set to synced:");
+    }else if (b == 4) {
+        icon = [[NSString stringWithUTF8String: iconPath] stringByAppendingString:@"/error.png"];
+        NSLog(@"Icon set to error:");
+    }
+
+    return icon;
+}
+
 @end
 
 int setBadge(const char* filepath, const char* iconPath) {
@@ -143,39 +179,25 @@ int removeIcon(const char* filepath) {
     return result;
 }
 
-int refreshState(const char* filepath, const char* iconPath){
+int refreshState(const char* filepath, const char* iconPath, const char* pathToMountFolder){
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+
+    NSString *file = [NSString stringWithUTF8String:filepath];
     
-    const char *attrName = [@"com.yammer.filestate" UTF8String];
+    NSString *mountPath = [NSString stringWithUTF8String:pathToMountFolder];
+    
+    NSRange mountPathContained = [file rangeOfString:mountPath];
+    
+    while(mountPathContained.location != NSNotFound){
+        NSString *icon = [IconManager getIconFromXattrAtPath:[file UTF8String] AndIconPath:iconPath];
+        int result = [IconManager setBadgeForFile: file AndIconPath:icon];
         
-    int bufferLength = getxattr(filepath,attrName,NULL,0,0,0);
-    
-    if(bufferLength <= 0) return 1;
-    
-    char *buffer = malloc(bufferLength);
-    
-    getxattr(filepath, attrName, buffer, bufferLength, 0, 0);
-    
-    NSString *retString = [[NSString alloc] initWithBytes:buffer length:bufferLength encoding:NSUTF8StringEncoding];
-    
-    free(buffer);
-    
-    if(retString == nil) return 2;
+        if(result != 0) return result;
         
-    NSString *icon;
-    
-    if([retString isEqualToString:@"SYNCING"]){
-        icon = [[NSString stringWithUTF8String: iconPath] stringByAppendingString:@"/syncing.png"];
-    }else if([retString isEqualToString:@"NOT_SYNCED"]){
-        icon = [[NSString stringWithUTF8String: iconPath] stringByAppendingString:@"/notSynced.png"];
-    }else if([retString isEqualToString:@"SYNCED"]){
-        icon = [[NSString stringWithUTF8String: iconPath] stringByAppendingString:@"/synced.png"];
+        file = [file stringByDeletingLastPathComponent];
+        mountPathContained = [file rangeOfString:mountPath];
     }
     
-    NSString *file = [NSString stringWithUTF8String:filepath];
-
-    int result = [IconManager setBadgeForFile: file AndIconPath:icon];
-    [pool drain];
-    return result;
-    
+    [pool drain];    
+    return 0;
 }
