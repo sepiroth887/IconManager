@@ -25,7 +25,10 @@
 + (int) setBadgeForFile:(NSString*) file AndIconPath:(NSString*)iconPath{
     
     if(![[NSFileManager defaultManager] fileExistsAtPath:file] || 
-       ![[NSFileManager defaultManager] fileExistsAtPath:iconPath]) return 1;
+       ![[NSFileManager defaultManager] fileExistsAtPath:iconPath]) {
+        NSLog(@"File not found: %@",file);
+        return 1;
+    }
     
     [self removeIconFromFile:file];
     
@@ -135,16 +138,16 @@
     NSString *icon;
     
     if(b == 1){
-        icon = [[NSString stringWithUTF8String: iconPath] stringByAppendingString:@"/syncing.png"];
+        icon = [[NSString stringWithUTF8String: iconPath] stringByAppendingString:@"/osx_overlay_icon_syncing.png"];
         NSLog(@"Icon set to syncing:");
     }else if(b == 2){
-        icon = [[NSString stringWithUTF8String: iconPath] stringByAppendingString:@"/notSynced.png"];
+        icon = [[NSString stringWithUTF8String: iconPath] stringByAppendingString:@"/osx_overlay_icon_err.png"];
         NSLog(@"Icon set to not synced:");
     }else if(b == 3){
-        icon = [[NSString stringWithUTF8String: iconPath] stringByAppendingString:@"/synced.png"];
+        icon = [[NSString stringWithUTF8String: iconPath] stringByAppendingString:@"/osx_overlay_icon_sync.png"];
         NSLog(@"Icon set to synced:");
     }else if (b == 4) {
-        icon = [[NSString stringWithUTF8String: iconPath] stringByAppendingString:@"/error.png"];
+        icon = [[NSString stringWithUTF8String: iconPath] stringByAppendingString:@"/osx_overlay_icon_err.png"];
         NSLog(@"Icon set to error:");
     }
 
@@ -190,9 +193,15 @@ int refreshState(const char* filepath, const char* iconPath, const char* pathToM
     
     while(mountPathContained.location != NSNotFound){
         NSString *icon = [IconManager getIconFromXattrAtPath:[file UTF8String] AndIconPath:iconPath];
+        
+        if(icon == nil) return 1;
+        
         int result = [IconManager setBadgeForFile: file AndIconPath:icon];
         
-        if(result != 0) return result;
+        if(result != 0){
+            NSLog(@"Failed to set icon for %@ with code %d",file,result);
+             return result;            
+        }
         
         file = [file stringByDeletingLastPathComponent];
         mountPathContained = [file rangeOfString:mountPath];
